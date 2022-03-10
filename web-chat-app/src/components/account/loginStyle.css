@@ -1,0 +1,17 @@
+.google_login_button {
+    position: absolute;
+    height: 40px;
+    width: 100px;
+}
+
+.google_login_button div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0 !important;
+}
+
+.google_login_button span {
+    font-weight: bold !important;
+    padding-left: 10px !important;
+}
