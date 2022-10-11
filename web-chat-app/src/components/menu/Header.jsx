@@ -1,9 +1,10 @@
-import { useContext  } from "react";
+import { useContext, useState } from "react";
 import { Box, makeStyles } from "@material-ui/core";
-import { Chat, MoreVert } from '@material-ui/icons';
+import { Chat } from '@material-ui/icons';
 
 import { AccountContext } from '../../context/AccountProvider';
 import HeaderMenu from "./HeaderMenu";
+import ProfileDrawer from '../drawer/ProfileDrawer';
 
 const useStyles = makeStyles({
     header: {
@@ -17,25 +18,30 @@ const useStyles = makeStyles({
     avatar: {
         height: 35,
         width: 35,
-        borderRadius: 999 
+        borderRadius: 10 
     },
     menuIconsPalette: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // background: '#A2A2A2',
-        borderRadius: 999,
         '& > *': {
             fontSize: 22,
             color: '#919191',
-            paddingBlock: 5
+            transition: 'all 0.2s ease',
+            borderRadius: 10
+        },
+        '& :hover': {
+            cursor: 'pointer',
+            background: 'rgba(50, 51, 55, 0.24)',
+            color: '#FFFFFF'
         },
         '& :first-child': {
             fontSize: 20,
-            paddingRight: 7.5
+            padding: 7.5,
         },
         '& :last-child': {
-            paddingLeft: 7.5
+            padding: 5,
+            marginLeft: 5
         }
     }
 })
@@ -44,15 +50,23 @@ const useStyles = makeStyles({
 const Header = () => {
     const classes = useStyles();
     const { account } = useContext(AccountContext);
+    const [open, setOpen] = useState(false);
+
+    const toggleDrawer = () => {
+        setOpen(true);
+    }
 
     return(
-        <Box className={classes.header}>
-            <img className={classes.avatar} src={account.imageUrl} alt="display-picture" />
-            <Box className={classes.menuIconsPalette}>
-                <Chat />
-                <HeaderMenu />
+        <>
+            <Box className={classes.header}>
+                <img className={classes.avatar} onClick={() => toggleDrawer()} src={account.imageUrl} alt="display-picture" />
+                <Box className={classes.menuIconsPalette}>
+                    <Chat />
+                    <HeaderMenu />
+                </Box>
             </Box>
-        </Box>
+            <ProfileDrawer open={open} setOpen={setOpen}/>
+        </>
     )
 }
     

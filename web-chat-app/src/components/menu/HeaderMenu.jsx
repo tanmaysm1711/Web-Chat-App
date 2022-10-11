@@ -7,8 +7,20 @@ import { GoogleLogout } from 'react-google-login';
 import { clientId } from '../../constants/data';
 
 import { AccountContext } from '../../context/AccountProvider';
+import ProfileDrawer from '../drawer/ProfileDrawer';
 
 const useStyles = makeStyles({
+    dropdown_btn: {
+        width: 25,
+        height: 25,
+        fontSize: 22,
+        borderRadius: 999,
+        // '&:hover': {
+        //     cursor: 'pointer',
+        //     background: 'rgba(50, 51, 55, 0.24)',
+        //     color: '#FFFFFF'
+        // }
+    },
     menuItem: {
         fontSize: 14,
         padding: '15px 60px 5px 24px',
@@ -25,6 +37,7 @@ const useStyles = makeStyles({
 
 const HeaderMenu = () => {
     const [open, setOpen] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
     const { setAccount } = useContext(AccountContext);
     const classes = useStyles();
 
@@ -42,9 +55,13 @@ const HeaderMenu = () => {
         setAccount('');
     }
 
+    const toggleDrawer = () => {
+        console.log("You clicked profile button!");
+        setOpenDrawer(true);
+    }
     return (
         <>
-            <MoreVert onClick={handleClick}/>
+            <MoreVert className={classes.dropdown_btn} onClick={handleClick}/>
             <Menu
                 id="basic-menu"
                 anchorEl={open}
@@ -63,7 +80,7 @@ const HeaderMenu = () => {
                   'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem className={classes.menuItem} onClick={handleClose}>Profile</MenuItem>
+                <MenuItem className={classes.menuItem} onClick={() => toggleDrawer() }>Profile</MenuItem>
                 <MenuItem className={classes.menuItem} onClick={handleClose}>
                     <GoogleLogout
                         clientId={clientId}
@@ -71,10 +88,10 @@ const HeaderMenu = () => {
                         onLogoutSuccess={onLogoutSuccess}
                         className={classes.logout}
                     >
-
                     </GoogleLogout>
                 </MenuItem>
             </Menu>
+            <ProfileDrawer open={openDrawer} setOpen={setOpenDrawer}/>
         </>
     )
 }

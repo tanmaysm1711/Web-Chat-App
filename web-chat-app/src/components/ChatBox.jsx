@@ -1,5 +1,6 @@
 import { Dialog, withStyles, Box, makeStyles } from '@material-ui/core';
 import Menu from './menu/Menu';
+import Chat from './chat/Chat';
 
 const useStyles = makeStyles({
     component: {
@@ -9,6 +10,7 @@ const useStyles = makeStyles({
         minWidth: 380
     },
     rightComponent: {
+        width: 'calc(100% - 380px)',
         borderLeft: '1px Solid rgba(0, 0, 0, 0.14)'
     }
 })
@@ -32,12 +34,11 @@ const ChatBox = ({ classes }) => {
             classes={{ paper : classes.dialogPaper }}
             BackdropProps = {{style : {backgroundColor: 'unset'}}}>
             <Box className={classname.component}>
-                <Box className={classname.leftComponent}>    
-                    {/* Chat List Component */}
+                <Box className={classname.leftComponent}>
                     <Menu />
                 </Box>
                 <Box className={classname.rightComponent}>    
-                    Messaging Component
+                    <Chat />
                 </Box>
             </Box>
         </Dialog>
